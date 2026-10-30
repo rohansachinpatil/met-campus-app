@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844">
+  <rect width="390" height="844" rx="32" fill="#f7f3fa"/>
+  <rect x="0" y="0" width="390" height="48" fill="#aec8f3"/>
+  <text x="25" y="30" fill="#19171e" font-family="Arial,sans-serif" font-size="13" font-weight="700">9:41</text>
+  <g fill="#19171e"><rect x="317" y="19" width="16" height="11" rx="2"/><rect x="337" y="17" width="4" height="14" rx="1"/><path d="M352 21h18v9h-18z"/><rect x="354" y="23" width="12" height="5" rx="1" fill="#f7f3fa"/></g>
+  <rect y="48" width="390" height="264" fill="#aec8f3"/>
+  <circle cx="334" cy="123" r="74" fill="#ddc0ef" opacity=".8"/>
+  <circle cx="72" cy="255" r="50" fill="#f7e5ad" opacity=".8"/>
+  <rect x="22" y="70" width="39" height="39" rx="13" fill="#19171e"/>
+  <path d="M31 96V81l10 7 10-7v15m-10-7v7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="87" fill="#19171e" font-family="Arial,sans-serif" font-size="16" font-weight="700">MET Campus</text>
+  <text x="72" y="101" fill="#4f4b55" font-family="Arial,sans-serif" font-size="9">MET CAMPUS</text>
+  <circle cx="344" cy="89" r="21" fill="#fff" opacity=".7"/><path d="M339 88h10m-5-5v10" stroke="#19171e" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="23" y="156" fill="#4d5260" font-family="Arial,sans-serif" font-size="12">Good morning,</text>
+  <text x="23" y="193" fill="#19171e" font-family="Arial,sans-serif" font-size="34" font-weight="700">Student.</text>
+  <text x="23" y="218" fill="#4d5260" font-family="Arial,sans-serif" font-size="12">Monday · Your week is underway</text>
+  <rect x="20" y="244" width="350" height="103" rx="19" fill="#fff"/>
+  <text x="38" y="270" fill="#635d69" font-family="Arial,sans-serif" font-size="10" font-weight="700">NEXT UP</text>
+  <text x="38" y="296" fill="#19171e" font-family="Arial,sans-serif" font-size="18" font-weight="700">Data Structures</text>
+  <text x="38" y="319" fill="#635d69" font-family="Arial,sans-serif" font-size="11">10:30 AM · Room 204</text>
+  <rect x="288" y="269" width="63" height="50" rx="15" fill="#fbf1cf"/>
+  <text x="319" y="291" text-anchor="middle" fill="#19171e" font-family="Arial,sans-serif" font-size="11" font-weight="700">10:30</text>
+  <text x="319" y="306" text-anchor="middle" fill="#635d69" font-family="Arial,sans-serif" font-size="8">AM</text>
+  <text x="22" y="383" fill="#19171e" font-family="Arial,sans-serif" font-size="18" font-weight="700">Your campus, at a glance</text>
+  <rect x="20" y="400" width="168" height="91" rx="18" fill="#fff"/>
+  <rect x="202" y="400" width="168" height="91" rx="18" fill="#fff"/>
+  <circle cx="51" cy="432" r="16" fill="#e8eef9"/><path d="M44 432h14m-7-7v14" stroke="#516d9f" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="43" y="467" fill="#635d69" font-family="Arial,sans-serif" font-size="9">ATTENDANCE</text>
+  <text x="136" y="460" fill="#19171e" font-family="Arial,sans-serif" font-size="20" font-weight="700">84%</text>
+  <circle cx="234" cy="432" r="16" fill="#f5e8fa"/><path d="M228 427h12v11h-12zm3-3v5m6-5v5" fill="none" stroke="#725684" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="226" y="467" fill="#635d69" font-family="Arial,sans-serif" font-size="9">THIS WEEK</text>
+  <text x="315" y="460" fill="#19171e" font-family="Arial,sans-serif" font-size="20" font-weight="700">5</text>
+  <text x="22" y="531" fill="#19171e" font-family="Arial,sans-serif" font-size="18" font-weight="700">Quick links</text>
+  <g font-family="Arial,sans-serif" font-size="10" fill="#19171e" text-anchor="middle">
+    <rect x="20" y="548" width="76" height="76" rx="18" fill="#ddc0ef"/><text x="58" y="592">Classroom</text>
+    <rect x="111" y="548" width="76" height="76" rx="18" fill="#f7e5ad"/><text x="149" y="592">Timetable</text>
+    <rect x="202" y="548" width="76" height="76" rx="18" fill="#cfe7c9"/><text x="240" y="592">Results</text>
+    <rect x="293" y="548" width="76" height="76" rx="18" fill="#f8cfb9"/><text x="331" y="592">Notices</text>
+  </g>
+  <text x="22" y="665" fill="#19171e" font-family="Arial,sans-serif" font-size="18" font-weight="700">Around campus</text>
+  <rect x="20" y="682" width="350" height="73" rx="17" fill="#fff"/>
+  <rect x="34" y="696" width="45" height="45" rx="13" fill="#fce6da"/>
+  <path d="M47 708h19m-19 7h14m-14 7h10" stroke="#19171e" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="91" y="709" fill="#19171e" font-family="Arial,sans-serif" font-size="11" font-weight="700">Campus update</text>
+  <text x="91" y="729" fill="#635d69" font-family="Arial,sans-serif" font-size="9">Latest notices and events in one place.</text>
+  <rect y="777" width="390" height="67" fill="#fff"/>
+  <path d="M0 777h390" stroke="#e7e1ed"/>
+  <g fill="#516d9f" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">
+    <circle cx="53" cy="799" r="7" fill="#aec8f3"/><text x="53" y="824">Home</text>
+    <circle cx="148" cy="799" r="7" fill="#e9e4ed"/><text x="148" y="824" fill="#77717c">Timetable</text>
+    <circle cx="243" cy="799" r="7" fill="#e9e4ed"/><text x="243" y="824" fill="#77717c">Attendance</text>
+    <circle cx="338" cy="799" r="7" fill="#e9e4ed"/><text x="338" y="824" fill="#77717c">More</text>
+  </g>
+</svg>

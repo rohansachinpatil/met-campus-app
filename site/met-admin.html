@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f2fa">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Restricted MET Campus registration review desk.">
+    <title>MET access desk</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="met-admin-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container admin-nav">
+        <a class="brand" href="index.html" aria-label="MET Campus home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 24V8l10 7 10-7v16M16 15v9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="brand-copy"><strong>MET access desk</strong><small>Restricted administrator area</small></span>
+        </a>
+        <span class="admin-lock-label"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg> Principal access only</span>
+      </div>
+    </header>
+
+    <main id="main" class="admin-main container">
+      <section class="admin-intro" aria-labelledby="admin-title">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Student account review</p>
+        <h1 id="admin-title">A careful check<br>before campus access.</h1>
+        <p>Review student requests, confirm the email, and match the claimed PRN with MET’s official records before activating an account.</p>
+      </section>
+
+      <div class="admin-message" id="admin-message" role="status" aria-live="polite" hidden></div>
+
+      <section class="admin-panel admin-login-panel" id="admin-login-panel" aria-labelledby="login-title">
+        <div class="admin-panel-heading">
+          <div><p class="admin-panel-kicker">MET administrator</p><h2 id="login-title">Sign in to review requests</h2></div>
+          <span class="admin-panel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.4 2.8 8 7 10 4.2-2 7-5.6 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="admin-panel-copy">Use the official MET email and password for the active <strong>Principal</strong> account. Other accounts cannot view this queue.</p>
+        <form id="admin-login-form" class="admin-login-form">
+          <div class="admin-field">
+            <label for="admin-email">Official MET email</label>
+            <input id="admin-email" name="email" type="email" autocomplete="username" inputmode="email" required>
+          </div>
+          <div class="admin-field">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="button button-primary admin-primary-button" id="admin-login-button" type="submit">Sign in securely</button>
+        </form>
+        <p class="admin-footnote">This page never stores your password or the service-role key. Sign-in is checked again by Supabase before every review action.</p>
+      </section>
+
+      <section class="admin-workspace" id="admin-workspace" aria-labelledby="queue-title" hidden>
+        <div class="admin-queue-heading">
+          <div><p class="admin-panel-kicker">Private queue</p><h2 id="queue-title">Registration requests</h2><p class="admin-signed-in" id="admin-signed-in"></p></div>
+          <div class="admin-queue-actions">
+            <button class="button admin-secondary-button" id="admin-refresh" type="button">Refresh queue</button>
+            <button class="button admin-quiet-button" id="admin-sign-out" type="button">Sign out</button>
+          </div>
+        </div>
+        <aside class="admin-review-note">
+          <span class="admin-note-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v4m0 4h.01M10.3 4.9 2.8 18a1.5 1.5 0 0 0 1.3 2.2h15.8a1.5 1.5 0 0 0 1.3-2.2l-7.5-13.1a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <p><strong>Claims are not proof.</strong> Verify each student and PRN against MET records yourself. Approval activates PRN sign-in; never approve a request based only on the submitted form.</p>
+        </aside>
+        <div class="admin-list-status" id="admin-list-status" role="status" aria-live="polite">Loading requests…</div>
+        <div class="admin-request-list" id="admin-request-list"></div>
+        <p class="admin-list-limit" id="admin-list-limit" hidden>Showing the latest 100 requests. Review older entries directly in the restricted Supabase queue.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container admin-footer"><span>MET Campus · Restricted administrator area</span><a href="index.html">Return to public site</a></div>
+    </footer>
+
+    <script src="config.js" defer></script>
+    <script src="met-admin.js" defer></script>
+  </body>
+</html>

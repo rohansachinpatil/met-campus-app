@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "MET Campus",
+    "slug": "met-campus-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "metcampus",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#f4eef8"
+        }
+      ],
+      "expo-status-bar",
+      "expo-secure-store"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "in.edu.met.campus"
+    },
+    "android": {
+      "package": "in.edu.met.campus",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#eedff8",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0ab7d726-0901-470e-9eb4-c104faa5d799"
+      }
+    },
+    "owner": "rohansachinpatil"
+  }
+}

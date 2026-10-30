@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844">
+  <rect width="390" height="844" rx="32" fill="#f8f5fb"/>
+  <rect width="390" height="48" fill="#f8f5fb"/>
+  <text x="25" y="30" fill="#19171e" font-family="Arial,sans-serif" font-size="13" font-weight="700">9:41</text>
+  <g fill="#19171e"><rect x="317" y="19" width="16" height="11" rx="2"/><rect x="337" y="17" width="4" height="14" rx="1"/><path d="M352 21h18v9h-18z"/></g>
+  <circle cx="42" cy="86" r="20" fill="#fff"/><path d="m45 79-7 7 7 7" fill="none" stroke="#19171e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="76" y="84" fill="#19171e" font-family="Arial,sans-serif" font-size="23" font-weight="700">Attendance</text>
+  <text x="24" y="119" fill="#635d69" font-family="Arial,sans-serif" font-size="11">A clear view of your progress.</text>
+  <rect x="20" y="146" width="350" height="194" rx="21" fill="#fff"/>
+  <text x="42" y="177" fill="#635d69" font-family="Arial,sans-serif" font-size="10" font-weight="700">OVERALL ATTENDANCE</text>
+  <circle cx="195" cy="247" r="56" fill="none" stroke="#ece8f0" stroke-width="13"/>
+  <circle cx="195" cy="247" r="56" fill="none" stroke="#8eacdF" stroke-width="13" stroke-linecap="round" stroke-dasharray="296 352" transform="rotate(-90 195 247)"/>
+  <text x="195" y="247" text-anchor="middle" fill="#19171e" font-family="Arial,sans-serif" font-size="27" font-weight="700">84%</text>
+  <text x="195" y="267" text-anchor="middle" fill="#635d69" font-family="Arial,sans-serif" font-size="9">across subjects</text>
+  <rect x="20" y="361" width="350" height="73" rx="17" fill="#fbf1cf"/>
+  <circle cx="53" cy="397" r="18" fill="#fff9e9"/><path d="M53 386v12l8 5" fill="none" stroke="#7b6334" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="83" y="390" fill="#19171e" font-family="Arial,sans-serif" font-size="11" font-weight="700">Keep your momentum</text>
+  <text x="83" y="410" fill="#635d69" font-family="Arial,sans-serif" font-size="9">Review each subject as the term moves along.</text>
+  <text x="22" y="478" fill="#19171e" font-family="Arial,sans-serif" font-size="17" font-weight="700">By subject</text>
+  <rect x="20" y="495" width="350" height="218" rx="18" fill="#fff"/>
+  <g font-family="Arial,sans-serif">
+    <text x="39" y="527" fill="#19171e" font-size="11" font-weight="700">Data Structures</text><text x="350" y="527" text-anchor="end" fill="#19171e" font-size="11" font-weight="700">88%</text><rect x="39" y="541" width="311" height="7" rx="3.5" fill="#ece8f0"/><rect x="39" y="541" width="274" height="7" rx="3.5" fill="#aec8f3"/>
+    <text x="39" y="579" fill="#19171e" font-size="11" font-weight="700">Computer Networks</text><text x="350" y="579" text-anchor="end" fill="#19171e" font-size="11" font-weight="700">82%</text><rect x="39" y="593" width="311" height="7" rx="3.5" fill="#ece8f0"/><rect x="39" y="593" width="255" height="7" rx="3.5" fill="#ddc0ef"/>
+    <text x="39" y="631" fill="#19171e" font-size="11" font-weight="700">Digital Logic Design</text><text x="350" y="631" text-anchor="end" fill="#19171e" font-size="11" font-weight="700">79%</text><rect x="39" y="645" width="311" height="7" rx="3.5" fill="#ece8f0"/><rect x="39" y="645" width="245" height="7" rx="3.5" fill="#cfe7c9"/>
+    <text x="39" y="683" fill="#19171e" font-size="11" font-weight="700">Engineering Mathematics</text><text x="350" y="683" text-anchor="end" fill="#19171e" font-size="11" font-weight="700">76%</text>
+  </g>
+  <rect y="777" width="390" height="67" fill="#fff"/><path d="M0 777h390" stroke="#e7e1ed"/>
+  <g fill="#77717c" font-family="Arial,sans-serif" font-size="8" text-anchor="middle"><circle cx="53" cy="799" r="7" fill="#e9e4ed"/><text x="53" y="824">Home</text><circle cx="148" cy="799" r="7" fill="#e9e4ed"/><text x="148" y="824">Timetable</text><circle cx="243" cy="799" r="7" fill="#aec8f3"/><text x="243" y="824" fill="#516d9f">Attendance</text><circle cx="338" cy="799" r="7" fill="#e9e4ed"/><text x="338" y="824">More</text></g>
+</svg>

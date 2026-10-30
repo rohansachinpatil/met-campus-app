@@ -1,0 +1,7 @@
+project_id = "met-campus-app"
+
+[functions.student-sign-in]
+verify_jwt = false
+
+[functions.registration-admin]
+verify_jwt = true

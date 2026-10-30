@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f2fa">
+    <meta name="description" content="Request a MET Campus student account. All requests are verified by MET before access is enabled.">
+    <title>Student registration — MET Campus</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="register-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="index.html" aria-label="MET Campus home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 24V8l10 7 10-7v16M16 15v9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="brand-copy"><strong>MET Campus</strong><small>MET Institute of Technology</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <svg class="menu-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="index.html#screens">App preview</a>
+          <a href="index.html#features">What’s inside</a>
+          <a class="nav-cta" href="index.html">Back to home</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="register-main">
+      <section class="register-intro container" aria-labelledby="register-title">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Student account request</p>
+        <h1 id="register-title">Register for<br><span>MET Campus.</span></h1>
+        <p class="register-lede">Create a request with your MET email and PRN. Your email must be verified and MET must approve your enrollment before app access is enabled.</p>
+      </section>
+
+      <section class="register-card container" aria-label="Student registration form">
+        <div class="pending-callout">
+          <span class="pending-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v4l2.5 1.5M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <p><strong>Access is not immediate.</strong> MET reviews your details first. Your claimed PRN will not be connected to your account until an administrator verifies it.</p>
+        </div>
+
+        <form id="registration-form">
+          <div class="register-fields">
+            <div class="register-field register-field-wide">
+              <label for="register-name">Full name</label>
+              <input id="register-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+            </div>
+            <div class="register-field">
+              <label for="register-prn">PRN</label>
+              <input id="register-prn" name="prn" type="text" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" minlength="8" maxlength="20" pattern="[0-9]{8,20}" aria-describedby="prn-hint" required>
+              <small id="prn-hint">Use the PRN issued by MET.</small>
+            </div>
+            <div class="register-field">
+              <label for="register-email">MET email</label>
+              <input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <small>We’ll send a verification link to this address.</small>
+            </div>
+            <div class="register-field">
+              <label for="register-password">Create a password</label>
+              <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="72" aria-describedby="password-hint" required>
+              <small id="password-hint">Use at least 12 characters. A password manager is recommended.</small>
+            </div>
+            <div class="register-field">
+              <label for="register-confirm">Confirm password</label>
+              <input id="register-confirm" name="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="72" required>
+            </div>
+          </div>
+
+          <label class="register-consent" for="register-consent">
+            <input id="register-consent" name="consent" type="checkbox" required>
+            <span>I understand this request stays pending until MET verifies my email and enrollment details.</span>
+          </label>
+
+          <p class="register-error" id="register-error" role="alert" aria-live="polite"></p>
+          <button class="button button-primary register-submit" id="register-submit" type="submit">
+            Create registration request
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="register-privacy">Your password is sent directly to Supabase Auth and is never included in the review request. The claimed name and PRN are stored in a restricted queue for MET verification.</p>
+        </form>
+        <div class="register-success" id="register-success" role="status" aria-live="polite" tabindex="-1" hidden>
+          <strong>Check your email.</strong>
+          <span>If this address can receive a verification link, open it to confirm your email. MET approval is still required before you can sign in.</span>
+        </div>
+      </section>
+
+      <p class="register-foot container">Faculty accounts are issued by MET administrators. <a href="index.html">Return to the campus page</a>.</p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="brand brand-footer" href="index.html" aria-label="MET Campus home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 24V8l10 7 10-7v16M16 15v9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="brand-copy"><strong>MET Campus</strong><small>MET Institute of Technology</small></span>
+        </a>
+        <p>Built for campus life. <span>© <span id="year"></span> MET Campus</span></p>
+      </div>
+    </footer>
+
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="register.js" defer></script>
+  </body>
+</html>
