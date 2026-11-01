@@ -645,6 +645,16 @@ function demoPortalForUsername(username){
   const normalized = String(username || '').trim().toLowerCase();
   return CAMPUS_PORTALS.find(portal => String(portal.username || '').toLowerCase() === normalized) || null;
 }
+function studentAccountByPrn(prn){
+  const cleanPrn = String(prn || '').trim();
+  if(!cleanPrn) return null;
+  return CSD_STUDENT_ROSTER.find(s => {
+    const roll = String(s[0]);
+    const rollPadded = s[4];
+    const fullPrn = s[1];
+    return cleanPrn === fullPrn || cleanPrn === rollPadded || cleanPrn === roll || cleanPrn === ('24052400000' + rollPadded);
+  }) || null;
+}
 function currentPortal(){
   if(!db.session || db.session.role === 'student') return null;
   const portal = CAMPUS_PORTALS.find(p => p.id === db.session.portalId);

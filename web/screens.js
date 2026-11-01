@@ -53,11 +53,11 @@ function authPage(){
         '</div>' +
       '</div>'
     : '<div>' +
-        '<label class="field-label" for="auth-prn">Student PRN</label>' +
+        '<label class="field-label" for="auth-prn">Student PRN or Roll No</label>' +
         '<div class="field"><span class="field__icon">' + ic('user', 18, 1.7) + '</span>' +
-          '<input id="auth-prn" name="prn" type="text" value="' + esc(prn) + '" autocomplete="username" inputmode="' + (demoMode ? 'text' : 'numeric') + '" autocapitalize="off" spellcheck="false" minlength="8" maxlength="20"' + (demoMode ? '' : ' pattern="[0-9]{8,20}"') + ' placeholder="Enter your PRN" aria-describedby="auth-prn-hint" required aria-label="Student PRN">' +
+          '<input id="auth-prn" name="prn" type="text" value="' + esc(prn) + '" autocomplete="username" inputmode="text" autocapitalize="off" spellcheck="false" placeholder="Enter PRN (e.g. 2405240000001 or 01)" aria-describedby="auth-prn-hint" required aria-label="Student PRN">' +
         '</div>' +
-        '<p class="field-hint" id="auth-prn-hint">Enter the PRN issued by MET.</p>' +
+        '<p class="field-hint" id="auth-prn-hint">Enter your PRN or 2-digit roll number (e.g. 01 for Prachi, 38 for Rohan).</p>' +
       '</div>';
   return '<div class="page page--no-dock auth" style="padding-bottom:0">' +
     '<div class="auth-head">' +

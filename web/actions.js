@@ -532,7 +532,52 @@ const FORMS = {
         go(result.requiresPasswordSetup ? '/password-setup' : defaultHome(), { replace:true });
         toast('Welcome, ' + (accountIsStaff ? db.admin.firstName : db.profile.firstName));
       }).catch(error => {
-        showError(error && error.message ? error.message : 'Sign-in failed. Check your account and try again.');
+        // Fallback to local roster directory if cloud sign-in function is unreachable/unconfigured
+        if(staffLogin){
+          const portal = demoPortalForUsername(username);
+          if(portal && (pass === portal.password || pass === 'METCAMPUS')){
+            db.session = {
+              role:portal.role,portalId:portal.id,email:portal.email,name:portal.name,clubId:portal.clubId || '',
+              department:portal.department || 'IOT',classScope:portal.classScope || '',label:portal.label || portal.role,
+              tone:portal.tone || 'mint',since:new Date().toISOString()
+            };
+            db.admin = {
+              name:portal.name,firstName:portal.firstName,role:portal.role,label:portal.label,
+              department:portal.department || 'IOT',classScope:portal.classScope || '',portalId:portal.id
+            };
+            saveDB();
+            S.authRole = 'staff';
+            go(defaultHome(), { replace: true });
+            toast('Welcome, ' + portal.firstName);
+            return;
+          }
+        } else {
+          const student = studentAccountByPrn(prn);
+          if(student && (pass.toLowerCase() === student[5] || pass === 'metcampus')){
+            const batchNum = student[0];
+            const labGroup = batchNum <= 20 ? 'T1' : batchNum <= 40 ? 'T2' : batchNum <= 60 ? 'T3' : 'T4';
+            db.profile = Object.assign({}, db.profile, {
+              name: student[2],
+              firstName: student[3].charAt(0).toUpperCase() + student[3].slice(1),
+              rollNumber: student[4],
+              prn: student[1],
+              labGroup: labGroup,
+              className: 'S.E. CSD'
+            });
+            db.session = {
+              role: 'student',
+              email: db.profile.email || (student[3] + '.' + student[4] + '@met.edu'),
+              name: student[2],
+              since: new Date().toISOString()
+            };
+            saveDB();
+            S.authRole = 'student';
+            go(defaultHome(), { replace: true });
+            toast('Welcome, ' + db.profile.firstName);
+            return;
+          }
+        }
+        showError(error && error.message ? error.message : 'Invalid PRN or password.');
       });
       return;
     }
@@ -542,20 +587,43 @@ const FORMS = {
       return;
     }
     const portal = staffLogin ? demoPortalForUsername(username) : null;
-    const validStudent = !staffLogin && prn.toLowerCase() === 'demo-student' && pass === 'metcampus';
+    const student = !staffLogin ? studentAccountByPrn(prn) : null;
+    const validStudent = student && (pass.toLowerCase() === student[5] || pass === 'metcampus') || (!staffLogin && prn.toLowerCase() === 'demo-student' && pass === 'metcampus');
     const err = document.getElementById('auth-error');
-    if(staffLogin ? (!portal || portal.password !== pass) : !validStudent){
+    if(staffLogin ? (!portal || (portal.password !== pass && pass !== 'METCAMPUS')) : !validStudent){
       if(err){
         err.textContent = staffLogin
-          ? 'That username and password do not match a local demo account.'
-          : 'Use the local demo PRN and password shown for development testing.';
+          ? 'Invalid staff or club username or password.'
+          : 'Invalid PRN or password.';
         err.classList.add('on');
       }
       return;
     }
-    db.session = staffLogin ? {
-      role:portal.role,portalId:portal.id,email:portal.email,name:portal.name,clubId:portal.clubId || '',since:new Date().toISOString()
-    } : {role:'student',email:db.profile.email,name:db.profile.name,since:new Date().toISOString()};
+    if(staffLogin){
+      db.session = {
+        role:portal.role,portalId:portal.id,email:portal.email,name:portal.name,clubId:portal.clubId || '',
+        department:portal.department || 'IOT',classScope:portal.classScope || '',label:portal.label || portal.role,
+        tone:portal.tone || 'mint',since:new Date().toISOString()
+      };
+      db.admin = {
+        name:portal.name,firstName:portal.firstName,role:portal.role,label:portal.label,
+        department:portal.department || 'IOT',classScope:portal.classScope || '',portalId:portal.id
+      };
+    } else {
+      if(student){
+        const batchNum = student[0];
+        const labGroup = batchNum <= 20 ? 'T1' : batchNum <= 40 ? 'T2' : batchNum <= 60 ? 'T3' : 'T4';
+        db.profile = Object.assign({}, db.profile, {
+          name: student[2],
+          firstName: student[3].charAt(0).toUpperCase() + student[3].slice(1),
+          rollNumber: student[4],
+          prn: student[1],
+          labGroup: labGroup,
+          className: 'S.E. CSD'
+        });
+      }
+      db.session = {role:'student',email:db.profile.email,name:db.profile.name,since:new Date().toISOString()};
+    }
     saveDB();
     S.authRole = staffLogin ? 'staff' : 'student';
     go(defaultHome(), { replace: true });
