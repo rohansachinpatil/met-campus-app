@@ -41,8 +41,8 @@ Deno.serve(async (request) => {
   if (request.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405);
 
   const baseUrl = Deno.env.get("SUPABASE_URL")?.replace(/\/$/, "");
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const publicKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SECRET_KEY") || "";
+  const publicKey = Deno.env.get("SUPABASE_ANON_KEY") || Deno.env.get("SUPABASE_PUBLISHABLE_KEY") || "";
   if (!baseUrl || !serviceRoleKey || !publicKey) {
     return jsonResponse({ error: "Sign-in service is not configured." }, 503);
   }

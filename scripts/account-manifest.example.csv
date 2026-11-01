@@ -1,0 +1,7 @@
+account_type,login_id,prn,auth_email,display_name,role,department,class_scope,portal_id,invite_sent_at,password_setup_completed_at,account_status
+student,12345678901,12345678901,prachi.shah@example.edu,Prachi Shah,student,CSD,S.E. CSD,,,,active
+student,12345678902,12345678902,rohan.patil@example.edu,Rohan Patil,student,CSD,S.E. CSD,,,,active
+faculty,principal_iot,,principal@example.edu,Principal Office,principal,Institute,,principal,,,active
+faculty,tpo_iot,,tpo@example.edu,Training & Placement Officer,tpo,Institute,,tpo,,,active
+faculty,hodcsd_iot,,hodcsd@example.edu,CSD Head of Department,hod,CSD,,hodcsd,,,active
+club,ecellmet_iot,,ecell@example.edu,eCell MET,club,,,club_ecell,,,active

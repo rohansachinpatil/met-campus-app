@@ -30,16 +30,7 @@ const ACTIONS = {
   /* ---------- auth ---------- */
   authRole: function(el, val){
     S.authRole = val === 'staff' ? 'staff' : 'student';
-    if(S.authRole === 'staff' && MET_BACKEND.demoMode() && !MET_BACKEND.configured() && !S.staffPortalId) S.staffPortalId = 'tpo';
     render(true);
-  },
-  authPortal: function(el, val){
-    S.staffPortalId = facultyPortal(val) ? val : '';
-    if(MET_BACKEND.demoMode() && !MET_BACKEND.configured()){
-      const email = document.getElementById('auth-email');
-      const portal = demoPortalForFaculty(S.staffPortalId);
-      if(email) email.value = portal ? portal.email : '';
-    }
   },
   togglePw: function(el, val){
     const input = document.getElementById(val);
@@ -53,9 +44,9 @@ const ACTIONS = {
     if(MET_BACKEND.configured()){
       openSheet(
         '<h2 class="sheet-title">Reset your password</h2>' +
-        '<p class="sheet-sub">For student accounts, enter the verified MET email linked to your PRN. We’ll send a password-reset link if the account is eligible.</p>' +
+        '<p class="sheet-sub">Enter the verified campus email linked to your account. We’ll send a password-reset link if the account is eligible.</p>' +
         '<form data-form="passwordReset">' +
-          '<label class="field-label" for="reset-email">Verified MET email</label>' +
+          '<label class="field-label" for="reset-email">Verified campus email</label>' +
           '<div class="field"><input id="reset-email" name="email" type="email" autocomplete="email" required></div>' +
           '<p class="auth-error" id="reset-error" role="alert" aria-live="polite"></p>' +
           '<button class="btn btn--block" type="submit">Send reset link</button>' +
@@ -479,42 +470,66 @@ const FORMS = {
       }
     });
   },
+  passwordSetup: function(data){
+    const password = String(data.password || '');
+    const confirmPassword = String(data.confirmPassword || '');
+    const showError = message => {
+      const err = document.getElementById('password-setup-error');
+      if(err){ err.textContent = message; err.classList.add('on'); }
+    };
+    if(password.length < 12){
+      showError('Use at least 12 characters for your personal password.');
+      return;
+    }
+    if(password !== confirmPassword){
+      showError('The two passwords do not match.');
+      return;
+    }
+    if(!MET_BACKEND.configured()){
+      showError('Password setup needs the campus backend. Contact the app administrator.');
+      return;
+    }
+    MET_BACKEND.completePasswordSetup(password).then(result => {
+      const role = result.profile && result.profile.role || 'student';
+      applyBackendAccount(result);
+      S.authRole = role === 'student' ? 'student' : 'staff';
+      go(defaultHome(), { replace:true });
+      toast('Personal password saved');
+    }).catch(error => {
+      showError(error && error.message ? error.message : 'Could not save your password. Try again.');
+    });
+  },
+
   signin: function(data){
-    const email = String(data.email || '').trim().toLowerCase();
+    const username = String(data.username || '').trim().toLowerCase();
     const prn = String(data.prn || '').trim();
     const pass = String(data.password || '');
     const staffLogin = S.authRole === 'staff';
-    const selectedPortal = staffLogin ? facultyPortal(String(data.portalId || '')) : null;
     const showError = message => {
       const err = document.getElementById('auth-error');
       if(err){ err.textContent = message; err.classList.add('on'); }
     };
 
-    if(staffLogin && !selectedPortal){
-      showError('Choose the faculty portal assigned to your campus account.');
+    if(staffLogin && !username){
+      showError('Enter the staff or club username assigned to your account.');
       return;
     }
 
     if(MET_BACKEND.configured()){
       const signIn = staffLogin
-        ? MET_BACKEND.signIn(email, pass)
+        ? MET_BACKEND.signInStaff(username, pass)
         : MET_BACKEND.signInStudent(prn, pass);
       signIn.then(async result => {
         const role = result.profile && result.profile.role || 'student';
         const accountIsStaff = role !== 'student';
         if(accountIsStaff !== staffLogin){
           await MET_BACKEND.signOut();
-          showError(staffLogin ? 'This account is not assigned to a faculty portal.' : 'This account is not assigned to a student portal.');
-          return;
-        }
-        if(staffLogin && (role !== selectedPortal.role || result.profile.portal_id !== selectedPortal.id)){
-          await MET_BACKEND.signOut();
-          showError('This account is not assigned to the selected portal. Choose the portal assigned by your campus administrator.');
+          showError(staffLogin ? 'This account is not assigned to a staff or club portal.' : 'This account is not assigned to a student portal.');
           return;
         }
         applyBackendAccount(result);
         S.authRole = accountIsStaff ? 'staff' : 'student';
-        go(defaultHome(), { replace:true });
+        go(result.requiresPasswordSetup ? '/password-setup' : defaultHome(), { replace:true });
         toast('Welcome, ' + (accountIsStaff ? db.admin.firstName : db.profile.firstName));
       }).catch(error => {
         showError(error && error.message ? error.message : 'Sign-in failed. Check your account and try again.');
@@ -526,16 +541,13 @@ const FORMS = {
       showError('Backend is not configured for this build. Contact the app administrator.');
       return;
     }
-    const demoPortal = staffLogin ? demoPortalForFaculty(selectedPortal.id) : null;
-    const portal = demoPortal && demoPortal.email.toLowerCase() === email && demoPortal.password === pass
-      ? demoPortal
-      : null;
+    const portal = staffLogin ? demoPortalForUsername(username) : null;
     const validStudent = !staffLogin && prn.toLowerCase() === 'demo-student' && pass === 'metcampus';
     const err = document.getElementById('auth-error');
-    if(staffLogin ? !portal : !validStudent){
+    if(staffLogin ? (!portal || portal.password !== pass) : !validStudent){
       if(err){
         err.textContent = staffLogin
-          ? 'That email and password do not match the selected local demo portal.'
+          ? 'That username and password do not match a local demo account.'
           : 'Use the local demo PRN and password shown for development testing.';
         err.classList.add('on');
       }

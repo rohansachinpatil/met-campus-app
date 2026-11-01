@@ -169,6 +169,16 @@
     authSession = session;
     await secureStore('set', JSON.stringify(session));
     const profile = await getProfile(session.user.id);
+    if (!profile.password_setup_completed_at) {
+      return {
+        session: session,
+        profile: profile,
+        state: null,
+        campusContent: {},
+        formResponses: [],
+        requiresPasswordSetup: true
+      };
+    }
     const values = await Promise.all([
       getState(session.user.id), getCampusContent(), getFormResponses()
     ]);
@@ -230,6 +240,28 @@
       await writeSession(null);
       throw error;
     }
+  }
+
+  async function signInStaff(username, password) {
+    if (!configured()) throw new Error('Backend is not configured for this build.');
+    const session = await authRequest('/functions/v1/staff-sign-in', {
+      username: String(username || '').trim().toLowerCase(), password: String(password || '')
+    }, null);
+    try {
+      return await buildLoginResult(session);
+    } catch (error) {
+      await writeSession(null);
+      throw error;
+    }
+  }
+
+  async function completePasswordSetup(password) {
+    if (!configured()) throw new Error('Backend is not configured for this build.');
+    const session = await readSession();
+    if (!session || !session.access_token) throw new Error('Sign in again before setting your password.');
+    const response = await authRequest('/functions/v1/password-setup', { password: String(password || '') }, session);
+    if (!response || !response.session) throw new Error('Password changed. Sign in again with your new password.');
+    return await buildLoginResult(response.session);
   }
 
   async function requestPasswordReset(email) {
@@ -428,6 +460,8 @@
     initialize: initialize,
     signIn: signIn,
     signInStudent: signInStudent,
+    signInStaff: signInStaff,
+    completePasswordSetup: completePasswordSetup,
     requestPasswordReset: requestPasswordReset,
     signOut: signOut,
     setCampusBaseline: function (db) { lastCampusData = campusContentFromDB(db); },

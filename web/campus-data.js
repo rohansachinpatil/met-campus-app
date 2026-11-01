@@ -185,33 +185,22 @@ const CAMPUS_CLUBS = [
   { id:'sacsde', name:'SACSDE', subtitle:'Student Committee of CSD', tone:'lilac' }
 ];
 
-/* Portal choices are selectors only; access still comes from the provisioned profile. */
-const FACULTY_PORTALS = [
-  { id:'principal', label:'Principal', role:'principal' },
-  { id:'tpo', label:'Training & Placement Officer (TPO)', role:'tpo' },
-  { id:'hodcsd', label:'HOD · Computer Science & Design (CSD)', role:'hod' },
-  { id:'hodcse', label:'HOD · Computer Science & Engineering (CSE)', role:'hod' },
-  { id:'hodarsa', label:'HOD · ARSA', role:'hod' },
-  { id:'hoscee', label:'Head of School · CEE', role:'hod' },
-  { id:'hodece', label:'HOD · Electronics & Computer Engineering (ECE)', role:'hod' }
-];
-
 /* Demo-only identities. Replace these placeholders with institution-managed accounts before production. */
 const CAMPUS_PORTALS = [
-  { id:'tpo', email:'tpo@met.edu', password:'metcampus', role:'tpo', name:'Training & Placement Officer', firstName:'TPO', label:'TPO · Training & Placement', tone:'mint', department:'Institute' },
-  { id:'hod1', email:'hod1@met.edu', password:'metcampus', role:'hod', name:'CSD Head of Department', firstName:'CSD HOD', label:'HOD · Computer Science & Design', tone:'lilac', department:'CSD' },
-  { id:'hod2', email:'hod2@met.edu', password:'metcampus', role:'hod', name:'Department HOD 2', firstName:'HOD 2', label:'HOD · department not assigned', tone:'peri', department:'' },
-  { id:'hod3', email:'hod3@met.edu', password:'metcampus', role:'hod', name:'Department HOD 3', firstName:'HOD 3', label:'HOD · department not assigned', tone:'peri', department:'' },
-  { id:'hod4', email:'hod4@met.edu', password:'metcampus', role:'hod', name:'Department HOD 4', firstName:'HOD 4', label:'HOD · department not assigned', tone:'peri', department:'' },
-  { id:'hod5', email:'hod5@met.edu', password:'metcampus', role:'hod', name:'Department HOD 5', firstName:'HOD 5', label:'HOD · department not assigned', tone:'peri', department:'' },
-  { id:'cc_fy', email:'cc.fy@met.edu', password:'metcampus', role:'coordinator', name:'First Year Class Coordinator', firstName:'First Year', label:'Class coordinator · First year', tone:'butter', classScope:'F.E.' },
-  { id:'cc_sy', email:'cc.sy@met.edu', password:'metcampus', role:'coordinator', name:'Second Year CSD Coordinator', firstName:'Second Year', label:'Class coordinator · S.E. CSD', tone:'peach', classScope:'S.E. CSD' },
-  { id:'cc_ty', email:'cc.ty@met.edu', password:'metcampus', role:'coordinator', name:'Third Year CSD Coordinator', firstName:'Third Year', label:'Class coordinator · T.E. CSD', tone:'lilac', classScope:'T.E. CSD' },
-  { id:'cc_by', email:'cc.by@met.edu', password:'metcampus', role:'coordinator', name:'Fourth Year Class Coordinator', firstName:'Fourth Year', label:'Class coordinator · Fourth year', tone:'rose', classScope:'B.E.' },
-  { id:'principal', email:'principal@met.edu', password:'metcampus', role:'principal', name:'Principal Office', firstName:'Principal', label:'Principal', tone:'ink', department:'Institute' },
-  { id:'club_ecell', email:'ecell@met.edu', password:'metcampus', role:'club', clubId:'ecell', name:'eCell MET', firstName:'eCell', label:'Club administrator · eCell MET', tone:'butter' },
-  { id:'club_staple', email:'staple@met.edu', password:'metcampus', role:'club', clubId:'staple', name:'STAPLE', firstName:'STAPLE', label:'Club administrator · STAPLE', tone:'peri' },
-  { id:'club_codecrafters', email:'codecrafters@met.edu', password:'metcampus', role:'club', clubId:'codecrafters', name:'Code Crafters', firstName:'Code Crafters', label:'Club administrator · Code Crafters', tone:'mint' },
-  { id:'club_tedxmet', email:'tedx@met.edu', password:'metcampus', role:'club', clubId:'tedxmet', name:'TEDxMET Nashik', firstName:'TEDxMET', label:'Club administrator · TEDxMET Nashik', tone:'rose' },
-  { id:'club_sacsde', email:'sacsde@met.edu', password:'metcampus', role:'club', clubId:'sacsde', name:'SACSDE', firstName:'SACSDE', label:'Club administrator · SACSDE', tone:'lilac' }
+  { id:'tpo', username:'tpo_iot', email:'tpo@met.edu', password:'metcampus', role:'tpo', name:'Training & Placement Officer', firstName:'TPO', label:'TPO · Training & Placement', tone:'mint', department:'Institute' },
+  { id:'hod1', username:'hodcsd_iot', email:'hod1@met.edu', password:'metcampus', role:'hod', name:'CSD Head of Department', firstName:'CSD HOD', label:'HOD · Computer Science & Design', tone:'lilac', department:'CSD' },
+  { id:'hod2', username:'hodcse_iot', email:'hod2@met.edu', password:'metcampus', role:'hod', name:'Department HOD 2', firstName:'HOD 2', label:'HOD · department not assigned', tone:'peri', department:'' },
+  { id:'hod3', username:'hodar_iot', email:'hod3@met.edu', password:'metcampus', role:'hod', name:'Department HOD 3', firstName:'HOD 3', label:'HOD · department not assigned', tone:'peri', department:'' },
+  { id:'hod4', username:'hodcee_iot', email:'hod4@met.edu', password:'metcampus', role:'hod', name:'Department HOD 4', firstName:'HOD 4', label:'HOD · department not assigned', tone:'peri', department:'' },
+  { id:'hod5', username:'hodece_iot', email:'hod5@met.edu', password:'metcampus', role:'hod', name:'Department HOD 5', firstName:'HOD 5', label:'HOD · department not assigned', tone:'peri', department:'' },
+  { id:'cc_fy', username:'ccfe_iot', email:'cc.fy@met.edu', password:'metcampus', role:'coordinator', name:'First Year Class Coordinator', firstName:'First Year', label:'Class coordinator · First year', tone:'butter', classScope:'F.E.' },
+  { id:'cc_sy', username:'cccsd_iot', email:'cc.sy@met.edu', password:'metcampus', role:'coordinator', name:'Second Year CSD Coordinator', firstName:'Second Year', label:'Class coordinator · S.E. CSD', tone:'peach', classScope:'S.E. CSD' },
+  { id:'cc_ty', username:'cctycsd_iot', email:'cc.ty@met.edu', password:'metcampus', role:'coordinator', name:'Third Year CSD Coordinator', firstName:'Third Year', label:'Class coordinator · T.E. CSD', tone:'lilac', classScope:'T.E. CSD' },
+  { id:'cc_by', username:'ccbe_iot', email:'cc.by@met.edu', password:'metcampus', role:'coordinator', name:'Fourth Year Class Coordinator', firstName:'Fourth Year', label:'Class coordinator · Fourth year', tone:'rose', classScope:'B.E.' },
+  { id:'principal', username:'principal_iot', email:'principal@met.edu', password:'metcampus', role:'principal', name:'Principal Office', firstName:'Principal', label:'Principal', tone:'ink', department:'Institute' },
+  { id:'club_ecell', username:'ecellmet_iot', email:'ecell@met.edu', password:'metcampus', role:'club', clubId:'ecell', name:'eCell MET', firstName:'eCell', label:'Club administrator · eCell MET', tone:'butter' },
+  { id:'club_staple', username:'staple_iot', email:'staple@met.edu', password:'metcampus', role:'club', clubId:'staple', name:'STAPLE', firstName:'STAPLE', label:'Club administrator · STAPLE', tone:'peri' },
+  { id:'club_codecrafters', username:'codecrafters_iot', email:'codecrafters@met.edu', password:'metcampus', role:'club', clubId:'codecrafters', name:'Code Crafters', firstName:'Code Crafters', label:'Club administrator · Code Crafters', tone:'mint' },
+  { id:'club_tedxmet', username:'tedxmet_iot', email:'tedx@met.edu', password:'metcampus', role:'club', clubId:'tedxmet', name:'TEDxMET Nashik', firstName:'TEDxMET', label:'Club administrator · TEDxMET Nashik', tone:'rose' },
+  { id:'club_sacsde', username:'sacsde_iot', email:'sacsde@met.edu', password:'metcampus', role:'club', clubId:'sacsde', name:'SACSDE', firstName:'SACSDE', label:'Club administrator · SACSDE', tone:'lilac' }
 ];

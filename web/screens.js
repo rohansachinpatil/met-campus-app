@@ -15,6 +15,7 @@ function notFound(path){
 }
 function pageFor(path){
   if(path === '/login') return { html: authPage(), dock:false, title:'Sign in' };
+  if(path === '/password-setup') return { html: passwordSetupPage(), dock:false, title:'Set your password' };
   if(path === '/home') return page(homePage(), { title:'Home' });
   if(path === '/timetable') return page(timetablePage(), { title:'Timetable' });
   if(path === '/attendance') return page(attendancePage(), { title:'Attendance' });
@@ -41,28 +42,14 @@ function pageFor(path){
 function authPage(){
   const staff = S.authRole === 'staff';
   const demoMode = MET_BACKEND.demoMode() && !MET_BACKEND.configured();
-  const selectedPortalId = S.staffPortalId || (demoMode && staff ? 'tpo' : '');
-  const demoPortal = demoMode && staff ? demoPortalForFaculty(selectedPortalId) : null;
-  const email = demoPortal ? demoPortal.email : '';
+  const username = demoMode && staff ? 'tpo_iot' : '';
   const prn = demoMode && !staff ? 'demo-student' : '';
   const pass = demoMode ? 'metcampus' : '';
-  const portalOptions = FACULTY_PORTALS.map(portal =>
-    '<option value="' + esc(portal.id) + '"' + (selectedPortalId === portal.id ? ' selected' : '') + '>' + esc(portal.label) + '</option>'
-  ).join('');
   const identityField = staff
     ? '<div>' +
-        '<label class="field-label" for="auth-portal">Faculty portal</label>' +
-        '<div class="field field--select"><span class="field__icon">' + ic('grid', 18, 1.7) + '</span>' +
-          '<select id="auth-portal" name="portalId" data-change="authPortal" required aria-describedby="auth-portal-hint">' +
-            '<option value=""' + (!selectedPortalId ? ' selected' : '') + ' disabled>Choose a faculty portal</option>' + portalOptions +
-          '</select>' +
-        '</div>' +
-        '<p class="field-hint" id="auth-portal-hint">This choice must match the portal assigned to your staff account.</p>' +
-      '</div>' +
-      '<div>' +
-        '<label class="field-label" for="auth-email">Official MET email</label>' +
-        '<div class="field"><span class="field__icon">' + ic('mail', 18, 1.7) + '</span>' +
-          '<input id="auth-email" name="email" type="email" value="' + esc(email) + '" autocomplete="username" inputmode="email" required aria-label="Official MET email address">' +
+        '<label class="field-label" for="auth-username">Staff or club username</label>' +
+        '<div class="field"><span class="field__icon">' + ic('user', 18, 1.7) + '</span>' +
+          '<input id="auth-username" name="username" type="text" value="' + esc(username) + '" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="64" placeholder="e.g. hodcsd_iot" required aria-label="Staff or club username">' +
         '</div>' +
       '</div>'
     : '<div>' +
@@ -87,7 +74,7 @@ function authPage(){
       '<p class="auth-sub">Use your MET account to open your campus.</p>' +
       '<div class="role-toggle" role="group" aria-label="Sign in as">' +
         '<button class="' + (!staff ? 'on' : '') + '" data-act="authRole" data-val="student" aria-pressed="' + (!staff) + '">Student</button>' +
-        '<button class="' + (staff ? 'on' : '') + '" data-act="authRole" data-val="staff" aria-pressed="' + staff + '">Faculty</button>' +
+        '<button class="' + (staff ? 'on' : '') + '" data-act="authRole" data-val="staff" aria-pressed="' + staff + '">Staff / Club</button>' +
       '</div>' +
       '<form data-form="signin">' +
         '<div class="field-stack">' +
@@ -100,7 +87,7 @@ function authPage(){
             '</div>' +
           '</div>' +
         '</div>' +
-          '<p class="auth-error ' + (globalThis.__MET_AUTH_ERROR__ ? 'on' : '') + '" id="auth-error" role="alert" aria-live="polite">' + esc(globalThis.__MET_AUTH_ERROR__ || (staff ? 'Choose your portal and enter your official MET email and password.' : 'Enter your PRN and password to continue.')) + '</p>' +
+           '<p class="auth-error ' + (globalThis.__MET_AUTH_ERROR__ ? 'on' : '') + '" id="auth-error" role="alert" aria-live="polite">' + esc(globalThis.__MET_AUTH_ERROR__ || (staff ? 'Enter your assigned username and password.' : 'Enter your PRN and password to continue.')) + '</p>' +
          '<div class="auth-meta">' +
            '<span class="checkline"><span class="checkbox on">' + ic('check', 11, 3) + '</span> Keep me signed in</span>' +
            '<button type="button" class="btn btn--text" data-act="forgot">Forgot password?</button>' +
@@ -109,8 +96,36 @@ function authPage(){
          '<button class="btn btn--block btn--lg" type="submit">Sign in</button>' +
        '</form>' +
         '<div class="auth-note"><b>' + (MET_BACKEND.configured() ? 'Campus account required' : demoMode ? 'Development demo' : 'Backend setup required') + '</b> · ' +
-           (MET_BACKEND.configured() ? (staff ? 'Sign in with your official MET email. The selected portal must match your administrator-assigned account.' : 'Sign in with your PRN and individual password. Registration requests require email confirmation and MET approval.') : demoMode ? 'This local demo is for development only. Production access uses individually provisioned campus accounts.' : 'This release will not accept demo credentials. Configure the Supabase project before distributing the APK.') + '</div>' +
+            (MET_BACKEND.configured() ? (staff ? 'Use the username assigned to your staff or club account. Your access comes from the verified campus account.' : 'Sign in with your PRN and password. Student registration requests require email confirmation and MET approval.') : demoMode ? 'This local demo is for development only. Production access uses individually provisioned campus accounts.' : 'This release will not accept demo credentials. Configure the Supabase project before distributing the APK.') + '</div>' +
       '<p class="auth-foot">MET Institute of Technology<br>Bhujbal Knowledge City, Bandra West, Mumbai</p>' +
+    '</div>' +
+  '</div>';
+}
+
+function passwordSetupPage(){
+  return '<div class="page page--no-dock auth" style="padding-bottom:0">' +
+    '<div class="auth-head"><div class="brand"><div class="brand-mark">' + logoMark(27) + '</div>' +
+      '<div class="brand-name"><span>MET</span><span>Campus</span><small>ACCOUNT SECURITY</small></div></div></div>' +
+    '<div class="auth-sheet">' +
+      '<div class="sheet-grab"></div>' +
+      '<h1 class="auth-title">Choose a personal password</h1>' +
+      '<p class="auth-sub">Your first password is temporary. Set a private password of at least 12 characters to continue.</p>' +
+      '<form data-form="passwordSetup">' +
+        '<div class="field-stack">' +
+          '<div><label class="field-label" for="new-password">New password</label>' +
+            '<div class="field"><span class="field__icon">' + ic('lock', 18, 1.7) + '</span>' +
+              '<input id="new-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required aria-label="New password">' +
+            '</div></div>' +
+          '<div><label class="field-label" for="confirm-password">Confirm new password</label>' +
+            '<div class="field"><span class="field__icon">' + ic('lock', 18, 1.7) + '</span>' +
+              '<input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required aria-label="Confirm new password">' +
+            '</div></div>' +
+        '</div>' +
+        '<p class="auth-error" id="password-setup-error" role="alert" aria-live="polite"></p>' +
+        '<button class="btn btn--block btn--lg" type="submit">Save personal password</button>' +
+      '</form>' +
+      '<button type="button" class="btn btn--text" style="margin-top:10px" data-act="signOut">Use a different account</button>' +
+      '<div class="auth-note"><b>Campus data is locked</b> · You must set a personal password before accessing the app.</div>' +
     '</div>' +
   '</div>';
 }

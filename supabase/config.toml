@@ -3,5 +3,11 @@ project_id = "met-campus-app"
 [functions.student-sign-in]
 verify_jwt = false
 
+[functions.staff-sign-in]
+verify_jwt = false
+
+[functions.password-setup]
+verify_jwt = true
+
 [functions.registration-admin]
 verify_jwt = true

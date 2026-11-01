@@ -24,16 +24,18 @@ npx supabase@latest link --project-ref bafjeaykzmmhpmocyaql
 npx supabase@latest db push
 ```
 
-This applies the backend, PRN sign-in, pending-registration, and review-workflow migrations. If the project has a migration-history mismatch, stop and have the database owner reconcile it; do not use `db reset` on a live project.
+This applies the backend, PRN sign-in, pending-registration, review-workflow, and username/first-login migrations. If the project has a migration-history mismatch, stop and have the database owner reconcile it; do not use `db reset` on a live project.
 
-### 3. Deploy the two Edge Functions
+### 3. Deploy the four Edge Functions
 
 ```sh
 npx supabase@latest functions deploy student-sign-in --project-ref bafjeaykzmmhpmocyaql
+npx supabase@latest functions deploy staff-sign-in --project-ref bafjeaykzmmhpmocyaql
+npx supabase@latest functions deploy password-setup --project-ref bafjeaykzmmhpmocyaql
 npx supabase@latest functions deploy registration-admin --project-ref bafjeaykzmmhpmocyaql
 ```
 
-`registration-admin` requires a valid Supabase session and then performs its own role check. Supabase supplies the function’s server-side `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ANON_KEY` secrets. If the service-role secret is missing, add it in **Project Settings → Edge Functions → Secrets**. Never put it in `site/config.js`, Vercel public variables, or the browser.
+`staff-sign-in` resolves a faculty or club username to the private Auth email and rate-limits attempts. `password-setup` lets a signed-in first-time account replace its temporary password. `registration-admin` requires a valid Supabase session and then performs its own role check. Supabase supplies the functions’ server-side `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ANON_KEY` secrets. If the service-role secret is missing, add it in **Project Settings → Edge Functions → Secrets**. Never put it in `site/config.js`, Vercel public variables, or the browser.
 
 ### 4. Publish the static site
 
@@ -52,6 +54,31 @@ The admin page cannot promote itself. An authorized MET owner must:
 
 The script sets trusted app metadata to `role: principal`, `portal_id: principal`, and `account_status: active`. It refuses to promote an unconfirmed email. Consider enabling MFA for the principal Auth account.
 
+### 6. Provision student, faculty and club accounts
+
+The private manifest lives at `supabase/private/account-provisioning-manifest.csv` and is git-ignored. Use `scripts/account-manifest.example.csv` as the column reference, but replace every example value with verified MET data. Keep the real manifest off shared drives and never attach it to a ticket. Every row needs a verified `auth_email`. Student rows also need an 8–20 digit `prn`; faculty and club rows need a `login_id`, which the script normalizes to the assigned `_iot` username. Set `account_status` to `active` once a row has been checked; rows marked with any other status are skipped.
+
+If you deleted `.env.admin.local` after step 5, recreate it from `scripts/provision-accounts.env.example` and fill in the project URL and service-role key. Then run a dry run:
+
+```sh
+node scripts/provision-accounts.mjs
+```
+
+Review the counts, then apply:
+
+```sh
+node scripts/provision-accounts.mjs --apply
+```
+
+The script writes a private report to `supabase/private/provisioning-report.csv`. It never prints passwords, never invents an email address, and skips rows with missing or duplicate values. Re-running is safe: it updates existing accounts without resetting a password that was already set. Use `--reset-passwords` only when MET has approved a deliberate reset for those rows.
+
+Default sign-in rules:
+
+- **Student:** username is the PRN. The temporary password is the lowercase first name plus the last two PRN digits, for example `prachi01`.
+- **Faculty and club:** username is the assigned `_iot` login ID, for example `principal_iot`, `tpo_iot`, `hodcsd_iot`, `cccsd_iot`, or `ecellmet_iot`. The temporary password is `METCAMPUS`.
+- **First sign-in:** every newly provisioned account must replace the temporary password with a personal 12+ character password before campus content, app state, or form responses unlock. `METCAMPUS` is therefore an initial password, not a permanent one.
+- **Password reset:** the sign-in screen sends a reset link to the verified `auth_email` on file. A user who does not know that email should contact the campus IT desk.
+
 ## Review a student request
 
 1. Go to `/met-admin.html` and sign in with the confirmed official principal account.
@@ -64,8 +91,9 @@ The queue is private to the Edge Function. Browser code never queries `registrat
 
 ## Manual steps MET still owns
 
-- Verify the student’s identity and claimed PRN against the official MET record.
+- Verify the student’s identity, official email and claimed PRN against the official MET record before adding them to the manifest.
 - Confirm use of the approved MET email domain and approved privacy/retention wording.
-- Invite and verify the initial principal account, then run the one-time local provisioning script.
+- Invite and verify the initial principal account, then run the local principal and account provisioning scripts.
+- Confirm every provisioned user completes the first-login password change, and keep the private manifest and its report out of git and shared storage.
 - Keep the principal account secure (MFA recommended), review requests, and resolve duplicate PRNs through MET before re-approval.
 - Apply migrations, deploy Edge Functions, and publish the site. These steps are not performed automatically by the static site.

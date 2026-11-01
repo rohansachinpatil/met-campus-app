@@ -536,20 +536,20 @@ function applyBackendAccount(result){
   const profile = result.profile || {};
   db.profile = Object.assign({}, defaults.profile, {
     id: profile.id,
-    name: profile.name || (saved.profile && saved.profile.name) || defaults.profile.name,
-    firstName: profile.first_name || (saved.profile && saved.profile.firstName) || defaults.profile.firstName,
+    name: profile.name || (saved.profile && saved.profile.name) || '',
+    firstName: profile.first_name || (saved.profile && saved.profile.firstName) || '',
     email: profile.email || (saved.profile && saved.profile.email) || '',
     phone: profile.phone || (saved.profile && saved.profile.phone) || '',
-    class: profile.class_name || (saved.profile && saved.profile.class) || defaults.profile.class,
-    programme: profile.programme || (saved.profile && saved.profile.programme) || defaults.profile.programme,
+    class: profile.class_name || (saved.profile && saved.profile.class) || '',
+    programme: profile.programme || (saved.profile && saved.profile.programme) || '',
     division: profile.division || (saved.profile && saved.profile.division) || '',
     roll: profile.roll_number || (saved.profile && saved.profile.roll) || '',
     prn: profile.prn || (saved.profile && saved.profile.prn) || '',
     cgpa: profile.cgpa == null ? (saved.profile && saved.profile.cgpa) : Number(profile.cgpa),
     backlogs: profile.backlogs == null ? (saved.profile && saved.profile.backlogs) : Number(profile.backlogs),
-    semester: profile.semester || (saved.profile && saved.profile.semester) || defaults.profile.semester,
-    academicYear: profile.academic_year || (saved.profile && saved.profile.academicYear) || defaults.profile.academicYear,
-    batch: profile.batch || (saved.profile && saved.profile.batch) || defaults.profile.batch,
+    semester: profile.semester || (saved.profile && saved.profile.semester) || '',
+    academicYear: profile.academic_year || (saved.profile && saved.profile.academicYear) || '',
+    batch: profile.batch || (saved.profile && saved.profile.batch) || '',
     labGroup: profile.lab_group || saved.labGroup || '',
     tone: profile.tone || (saved.profile && saved.profile.tone) || defaults.profile.tone
   });
@@ -575,6 +575,7 @@ function applyBackendAccount(result){
     classScope: profile.class_scope || '',
     label: profile.label || role,
     tone: profile.tone || 'butter',
+    mustChangePassword: !profile.password_setup_completed_at,
     since: new Date().toISOString()
   };
   db.admin = {
@@ -603,7 +604,6 @@ function resetDB(){
 /* ---------- ui state ---------- */
 const S = {
   authRole: 'student',
-  staffPortalId: '',
   day: (new Date().getDay() === 0 ? 1 : new Date().getDay()),
   attTab: 'subjects',
   classTab: 'work',
@@ -641,13 +641,9 @@ const ADMIN_TABS = [
   { path:'/admin/more', label:'More', icon:'menu' }
 ];
 
-function facultyPortal(portalId){
-  return FACULTY_PORTALS.find(portal => portal.id === portalId) || null;
-}
-function demoPortalForFaculty(portalId){
-  const demoIds = { hodcsd:'hod1', hodcse:'hod2', hodarsa:'hod3', hoscee:'hod4', hodece:'hod5' };
-  const id = demoIds[portalId] || portalId;
-  return CAMPUS_PORTALS.find(portal => portal.id === id) || null;
+function demoPortalForUsername(username){
+  const normalized = String(username || '').trim().toLowerCase();
+  return CAMPUS_PORTALS.find(portal => String(portal.username || '').toLowerCase() === normalized) || null;
 }
 function currentPortal(){
   if(!db.session || db.session.role === 'student') return null;
@@ -761,8 +757,10 @@ function normalizeRoute(){
   let path = currentPath();
   if(!db.session){
     if(path !== '/login') path = '/login';
+  } else if(MET_BACKEND.configured() && db.session.mustChangePassword){
+    if(path !== '/password-setup') path = '/password-setup';
   } else {
-    if(path === '/login' || !path) path = defaultHome();
+    if(path === '/login' || path === '/password-setup' || !path) path = defaultHome();
     if(isAdminPath(path) && db.session.role === 'student') path = '/home';
     if(isAdminPath(path) && !canOpenStaffRoute(path)) path = '/admin';
   }
