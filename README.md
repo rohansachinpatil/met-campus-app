@@ -1,6 +1,6 @@
 # 🎓 MET Campus App
 
-An official campus companion application for **MET Institute of Technology (Bandra West, Mumbai)**. The app brings together student academics, attendance tracking, classroom announcements, timetables with laboratory batch rotations, campus event registrations, and TPO placement drives under a unified, role-based mobile interface.
+An official campus companion application for **MET Institute of Technology (Adgaon, Nashik, Maharashtra)**. The app brings together student academics, attendance tracking, classroom announcements, timetables with laboratory batch rotations, campus event registrations, and TPO placement drives under a unified, role-based mobile interface.
 
 ---
 
@@ -108,4 +108,4 @@ npx eas-cli build -p android --profile apk
 
 ## 🏛️ Institute Details
 **MET Institute of Technology**  
-*Bhujbal Knowledge City, Bandra West, Mumbai, Maharashtra 400050*
+*Bhujbal Knowledge City, Adgaon, Nashik, Maharashtra 422003*

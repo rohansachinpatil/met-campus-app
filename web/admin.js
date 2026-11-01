@@ -520,7 +520,7 @@ function adminGatePage(){
     }
   }
 
-  return pageHead('Gate pass', 'Main gate · Bandra West · 7:30 AM–7:30 PM', {
+  return pageHead('Gate pass', 'Main gate · Adgaon, Nashik · 7:30 AM–7:30 PM', {
       right: '<span class="badge ' + (pending.length ? 'badge--amber' : 'badge--green') + '">' + pending.length + ' pending</span>'
     }) +
     '<form class="form-card" data-form="gateLookup" style="margin-top:6px">' +

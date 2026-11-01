@@ -63,7 +63,7 @@ function authPage(){
     '<div class="auth-head">' +
       '<div class="brand">' +
         '<div class="brand-mark">' + logoMark(27) + '</div>' +
-        '<div class="brand-name"><span>MET</span><span>Campus</span><small>BANDRA WEST</small></div>' +
+        '<div class="brand-name"><span>MET</span><span>Campus</span><small>ADGAON, NASHIK</small></div>' +
       '</div>' +
       '<button class="icon-btn auth-help" data-act="openHelp" aria-label="Help">' + ic('help', 19, 1.8) + '</button>' +
     '</div>' +
@@ -97,7 +97,7 @@ function authPage(){
        '</form>' +
         '<div class="auth-note"><b>' + (MET_BACKEND.configured() ? 'Campus account required' : demoMode ? 'Development demo' : 'Backend setup required') + '</b> · ' +
             (MET_BACKEND.configured() ? (staff ? 'Use the username assigned to your staff or club account. Your access comes from the verified campus account.' : 'Sign in with your PRN and password. Student registration requests require email confirmation and MET approval.') : demoMode ? 'This local demo is for development only. Production access uses individually provisioned campus accounts.' : 'This release will not accept demo credentials. Configure the Supabase project before distributing the APK.') + '</div>' +
-      '<p class="auth-foot">MET Institute of Technology<br>Bhujbal Knowledge City, Bandra West, Mumbai</p>' +
+      '<p class="auth-foot">MET Institute of Technology<br>Bhujbal Knowledge City, Adgaon, Nashik, Maharashtra</p>' +
     '</div>' +
   '</div>';
 }
